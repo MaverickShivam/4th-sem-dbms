@@ -1,0 +1,281 @@
+create table person
+(
+    driver_id number(10),
+    dname varchar2(20),
+    address varchar2(30),
+    primary key(driver_id)
+);
+create table car
+(
+    regno varchar2(10),
+    carmodel varchar2(10),
+    cyear number(5),
+    primary key(regno)
+);
+create table accident 
+(
+    reportno number(10),
+    adate date,
+    alocation varchar2(30),
+    primary key(reportno)
+);
+create table owns
+(
+    driver_id number(10),
+    regno varchar2(10),
+    primary key(driver_id,regno),
+    foreign key(driver_id) references person(driver_id),
+    foreign key(regno) references car(regno)
+);
+create table participated 
+(
+    driver_id number(10),
+    regno varchar2(10),
+    report_no number(10),
+    damage_amount number(10),
+    primary key(driver_id,regno,report_no),
+    foreign key(driver_id,regno) references owns(driver_id,regno),
+    foreign key(report_no) references accident(reportno)
+);
+insert into participated values(&driverid,'&regno',&reportno,&damageamount);
+select * from person;
+select * from car;
+select * from accident;
+select * from owns;
+select * from participated;
+____________________________________
+script output:
+
+User SHIVAM created.
+
+
+Grant succeeded.
+
+
+Table PERSON created.
+
+
+Table CAR created.
+
+
+Table ACCIDENT created.
+
+
+Error starting at line : 22 in command -
+create table owns
+(
+    driver_id varchar2(10),
+    regno varchar2(10),
+    primary key(driver_id,regno),
+    foreign key(driver_id) references person(driver_id),
+    foreign key(regno) references car(regno)
+)
+Error report -
+ORA-02267: column type incompatible with referenced column type
+02267. 00000 -  "column type incompatible with referenced column type"
+*Cause:    The datatype of the referencing column is incompatible with the
+
+Table OWNS created.
+
+
+Table PARTICIPATED created.
+
+
+Error starting at line : 1 in command -
+create table person
+(
+    driver_id number(10),
+    dname varchar2(20),
+    address varchar2(30),
+    primary key(driver_id)
+)
+Error report -
+ORA-00955: name is already used by an existing object
+00955. 00000 -  "name is already used by an existing object"
+*Cause:    
+*Action:
+
+Error starting at line : 1 in command -
+drop table person
+Error report -
+ORA-02449: unique/primary keys in table referenced by foreign keys
+02449. 00000 -  "unique/primary keys in table referenced by foreign keys"
+*Cause:    An attempt was made to drop a table with unique or
+           primary keys referenced by foreign keys in another table.
+*Action:   Before performing the above operations the table, drop the
+           foreign key constraints in other tables. You can see what
+           constraints are referencing a table by issuing the following
+           command:
+           SELECT * FROM USER_CONSTRAINTS WHERE TABLE_NAME = "tabnam";
+
+Table PARTICIPATED dropped.
+
+
+Table OWNS dropped.
+
+
+Error starting at line : 40 in command -
+drop table accidents
+Error report -
+ORA-00942: table or view does not exist
+00942. 00000 -  "table or view does not exist"
+*Cause:    
+*Action:
+
+Table ACCIDENT dropped.
+
+
+Table CAR dropped.
+
+
+Table PERSON dropped.
+
+
+Table PERSON created.
+
+
+Table CAR created.
+
+
+Table ACCIDENT created.
+
+
+Table OWNS created.
+
+
+Table PARTICIPATED created.
+
+old:insert into person values(&driver_id,'&dname','&address')
+new:insert into person values(01,'abhishek','andhra')
+
+1 row inserted.
+
+old:insert into person values(&driver_id,'&dname','&address')
+new:insert into person values(02,'dhanush','delhi')
+
+1 row inserted.
+
+old:insert into person values(&driver_id,'&dname','&address')
+new:insert into person values(03,'farhan','faizabad')
+
+1 row inserted.
+
+old:insert into person values(&driver_id,'&dname','&address')
+new:insert into person values(04,'shivam','sanghai')
+
+1 row inserted.
+
+old:insert into person values(&driver_id,'&dname','&address')
+new:insert into person values(05,'tanmay','tirupati')
+
+1 row inserted.
+
+old:insert into person values('&regno','&date',&year)
+new:insert into person values('ka01','audi 1',2001)
+
+Error starting at line : 40 in command -
+insert into person values('&regno','&date',&year)
+Error report -
+ORA-01722: invalid number
+
+old:insert into car values('&regno','&model',&year)
+new:insert into car values('ka01','audi1',2001)
+
+1 row inserted.
+
+old:insert into car values('&regno','&model',&year)
+new:insert into car values('ka02','audi2',2002)
+
+1 row inserted.
+
+old:insert into car values('&regno','&model',&year)
+new:insert into car values('ka03','audi3',2003)
+
+1 row inserted.
+
+old:insert into car values('&regno','&model',&year)
+new:insert into car values('ka04','audi4',2004)
+
+1 row inserted.
+
+old:insert into car values('&regno','&model',&year)
+new:insert into car values('ka05','audi5',2005)
+
+1 row inserted.
+
+old:insert into accident values(&repno,'&date','&address')
+new:insert into accident values(1,'01-01-2000','bangalore')
+
+1 row inserted.
+
+old:insert into accident values(&repno,'&date','&address')
+new:insert into accident values(2,'02-02-2002','chandigarh')
+
+1 row inserted.
+
+old:insert into accident values(&repno,'&date','&address')
+new:insert into accident values(3,'03-03-2003','delhi')
+
+1 row inserted.
+
+old:insert into accident values(&repno,'&date','&address')
+new:insert into accident values(4,'04-04-2004','faizabd')
+
+1 row inserted.
+
+old:insert into accident values(&repno,'&date','&address')
+new:insert into accident values(5,'05-05-2005','tirupati')
+
+1 row inserted.
+
+old:insert into owns values('&driverid','&regno')
+new:insert into owns values('01','ka03')
+
+1 row inserted.
+
+old:insert into owns values('&driverid','&regno')
+new:insert into owns values('01','ka01')
+
+1 row inserted.
+
+old:insert into owns values('&driverid','&regno')
+new:insert into owns values('02','ka02')
+
+1 row inserted.
+
+old:insert into owns values('&driverid','&regno')
+new:insert into owns values('03','ka04')
+
+1 row inserted.
+
+old:insert into owns values('&driverid','&regno')
+new:insert into owns values('04','ka05')
+
+1 row inserted.
+
+old:insert into participated values(&driverid,'&regno',&reportno,&damageamount)
+new:insert into participated values(01,'ka01',1,100)
+
+1 row inserted.
+
+old:insert into participated values(&driverid,'&regno',&reportno,&damageamount)
+new:insert into participated values(01,'ka03',2,200)
+
+1 row inserted.
+
+old:insert into participated values(&driverid,'&regno',&reportno,&damageamount)
+new:insert into participated values(02,'ka02',3,300)
+
+1 row inserted.
+
+old:insert into participated values(&driverid,'&regno',&reportno,&damageamount)
+new:insert into participated values(03,'ka04',4,400)
+
+1 row inserted.
+
+old:insert into participated values(&driverid,'&regno',&reportno,&damageamount)
+new:insert into participated values(04,'ka05',5,500)
+
+1 row inserted.
+
+_____________________________________
